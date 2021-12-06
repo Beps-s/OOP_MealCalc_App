@@ -15,20 +15,24 @@ const ItemCtrl = (function(){
   }
 
   return {
-   logData: function(ItemCtrl, UICtrl){
+    getItems: function(){
+      return data.items
+    },
+   logData: function(){
         return data
       }
     }
 })();
 
 const UICtrl = (function(){
-
 })();
 
-const App = ( function(ItemCtrl, UICtrl){
+const App = (function(ItemCtrl, UICtrl){
   return {
       init: function(){
         console.log('Initializing App')
+        const items = ItemCtrl.getItems()
+        console.log(items)
       }
     }
 }) (ItemCtrl, UICtrl);
