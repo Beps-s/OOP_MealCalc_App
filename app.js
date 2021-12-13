@@ -4,7 +4,6 @@ const ItemCtrl = (function(){
     this.name = name
     this.calories = calories 
   }
-
   const data = {
     items: [
         {id: 0, name: 'Steak Dinner', calories: 1200},
@@ -13,10 +12,21 @@ const ItemCtrl = (function(){
     ],
     total: 0
   }
-
   return {
     getItems: function(){
       return data.items
+    },
+    addItem: function(name, calories){
+      let ID;
+      if(data.items.lenght > 0){
+        ID = data.items[data.items.lenght - 1].id + 1
+      } else {
+        ID = 0
+      }
+      calories = parseInt(calories)
+      newItem = new Item(ID, name, calories)
+      data.Items.push(newItem)
+      return newItem
     },
    logData: function(){
         return data
@@ -25,6 +35,11 @@ const ItemCtrl = (function(){
 })();
 
 const UICtrl = (function(){
+  const UISelectors = {
+    itemNameInput: '#item-name',
+    itemCaloriesInput: '#item-calories',
+    addBtn: '#add-btn'
+  }
   return {
     populateItemList: function(items){
       let html = '';
@@ -37,16 +52,38 @@ const UICtrl = (function(){
         </li>`;
       })
       document.querySelector("#item-list").innerHTML = html;
+    },
+    getItemInput: function(){
+      return{
+        name: document.querySelector(UISelectors.itemNameInput).value,
+        calories: document.querySelector(UISelectors.itemCaloriesInput).value
+      }
+    },
+    getSelectors: function(){
+      return UISelectors
     }
   }
 })();
 
 const App = (function(ItemCtrl, UICtrl){
+  const loadEventListeners = function(){
+    const UISelectors = UICtrl.getSelectors()
+    document.querySelector(UISelectors.addBtn)
+      .addEventListener('click', itemAddSubmit)
+  },
+  const itemAddSubmit = fucntion(event){
+    const input = UICtrl.getItemInput()
+    if(input.name !== '' && input.calories !== ''){
+      const newItem = ItemCtrl.addItem(input.name, input.calories)
+    }
+    event.preventDefault()
+  }
   return {
       init: function(){
         console.log('Initializing App')
         const items = ItemCtrl.getItems()
         UICtrl.populateItemList(items)
+        loadEventListeners()
       }
     }
 }) (ItemCtrl, UICtrl);
