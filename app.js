@@ -53,7 +53,7 @@ const ItemCtrl = (function(){
       }
       calories = parseInt(calories)
       newItem = new Item(ID, name, calories)
-      data.Items.push(newItem)
+      data.items.push(newItem)
       return newItem
     },
     getTotalCalories: function(){
