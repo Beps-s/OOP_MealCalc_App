@@ -28,6 +28,16 @@ const ItemCtrl = (function(){
       data.Items.push(newItem)
       return newItem
     },
+    getTotalCalories: function(){
+      let total = 0;
+      data.items.forEach(function(item){
+        total = total + item.calories;
+        console.log(total)
+      });
+      data.total = total
+      console.log(data.total)
+      return data.total;
+    },
    logData: function(){
         return data
       }
@@ -38,7 +48,8 @@ const UICtrl = (function(){
   const UISelectors = {
     itemNameInput: '#item-name',
     itemCaloriesInput: '#item-calories',
-    addBtn: '#add-btn'
+    addBtn: '#add-btn',
+    totalCalories: '.total-calories'
   }
   return {
     populateItemList: function(items){
@@ -51,7 +62,7 @@ const UICtrl = (function(){
         </a>
         </li>`;
       })
-      document.querySelector("#item-list").innerHTML = html;
+      document.querySelector(UISelectors.itemList).innerHTML = html;
     },
     getItemInput: function(){
       return{
@@ -61,6 +72,24 @@ const UICtrl = (function(){
     },
     getSelectors: function(){
       return UISelectors
+    },
+    addListItem: function(item){
+      const li = document.createElement('li');
+      li.className = 'collection-item'
+      li.id = `item-${item.id}`;
+      li.innerHTML = `<strong>${item.name}: </strong>
+        <em>${item.calories} Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>`;
+      document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li)
+    },
+    clearInput: function(){
+      document.querySelector(UISelectors.itemNameInput).value = '';
+      document.querySelector(UISelectors.itemCaloriesInput).value = '';
+    },
+    showTotalCalories: function(totalCalories){
+      document.querySelector(UISelectors.totalCalories).textContent = totalCalories;
     }
   }
 })();
@@ -71,10 +100,14 @@ const App = (function(ItemCtrl, UICtrl){
     document.querySelector(UISelectors.addBtn)
       .addEventListener('click', itemAddSubmit)
   },
-  const itemAddSubmit = fucntion(event){
+  const itemAddSubmit = function(event){
     const input = UICtrl.getItemInput()
     if(input.name !== '' && input.calories !== ''){
       const newItem = ItemCtrl.addItem(input.name, input.calories)
+      UICtrl.addListItem(newItem)
+      const totalCalories = ItemCtrl.getTotalCalories();
+      UICtrl,showTotalCalories(totalCalories);
+      UICtrl.clearInput();
     }
     event.preventDefault()
   }
