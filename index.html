@@ -11,7 +11,7 @@
     <nav>
         <div class="nav-wrapper blue">
             <div class="container">
-                <a href="#" class="brand-logo center">Track calories</a>
+                <a class="brand-logo center">Track calories</a>
             </div>
         </div>
     </nav>
@@ -23,16 +23,23 @@
              <form class="col">
                 <div class="row">
                      <div class="input-field col s6">
-                        <input type="text" placeholder="Add Item"
-                         id="item-name">
+                        <input type="text" placeholder="Add Item" id="item-name">
                          <label for="item-name">Meal</label>
                      </div>
                      <div class="input-field col s6">
                         <input type="text" placeholder="Add Calories" id="item-calories">
                          <label for="item-calories ">Calories</label>
                      </div>
-                    <button class="add-btn btn blue darken-3"><i
-                     class="fa fa-plus"></i> Add Meal</button>
+                    <button class="add-btn btn green darken-3" style="float: left; display: true;">
+                     <i class="fa fa-plus"></i> Add Meal</button>
+                    <button class="clear-btn btn red darken-3" style="float: right; display: true;">
+                     <i class="fas fa-ban"></i> Remove All</a>
+                    <button class="back-btn btn grey light" style="float: right; display: none;">
+                     <i class="fas fa-arrow-alt-circle-left"></i> Back</a>
+                    <button class="update-btn btn blue darken-3" style="float: left; display: none;">
+                     <i class="fas fa-edit"></i> Update</a>
+                    <button class="delete-btn btn orange darken-3" style="float: left; display: none;">
+                     <i class="fas fa-trash-alt"></i> Delete</a>
                  </div>
             </form>
         </div>
