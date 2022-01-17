@@ -128,11 +128,13 @@ const UICtrl = (function(){
       document.querySelector(UISelectors.totalCalories).textContent = '0';
     },
     showBtns: function(){
+      if(event.target.parentElement.tagName == 'A'){
       document.querySelector(UISelectors.backBtn).style.display = ''
       document.querySelector(UISelectors.deleteBtn).style.display = ''
       document.querySelector(UISelectors.updateBtn).style.display = ''
       document.querySelector(UISelectors.addBtn).style.display = 'none'
       document.querySelector(UISelectors.clearBtn).style.display = 'none'
+      }
     },
     hideBtns: function(){
       document.querySelector(UISelectors.addBtn).style.display = ''
@@ -140,7 +142,10 @@ const UICtrl = (function(){
       document.querySelector(UISelectors.backBtn).style.display = 'none'
       document.querySelector(UISelectors.deleteBtn).style.display = 'none'
       document.querySelector(UISelectors.updateBtn).style.display = 'none'
-    }
+    },
+    clearMeal: function(){
+
+    },
   }
 })();
 
@@ -153,6 +158,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     document.querySelector(UISelectors.clearBtn).addEventListener('click', () => {
     UICtrl.clearUI();
     StorageCtrl.clearAll();
+    document.querySelector(UISelectors.deleteBtn).addEventListener('click', clearMeal);
   })
     document.addEventListener('DOMContentLoaded', getItemsFromStorage)
   }
@@ -167,14 +173,6 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
       UICtrl.clearInput();
     }
     event.preventDefault()
-  }
-  const modifyItem = function(event){
-    const items = ItemCtrl.getItems()
-    if(items.textContent == '.edit-item'){
-      //items.parentElement.remove()
-
-      console.log('CLICK')
-    }
   }
   const getItemsFromStorage = function(){
     const items = StorageCtrl.getItemsFromStorage()
